@@ -4,7 +4,7 @@ import dj_database_url
 # CUSTOM
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-db_from_env = dj_database_url.config()
+db_from_env = dj_database_url.config(default=DATABASE_URL)
 
 DATABASES = {
     'default': db_from_env
