@@ -2,3 +2,7 @@ django
 psycopg2
 djangorestframework
 dj_database_url
+whitenoise
+gunicorn
+boto3
+django-storages
