@@ -1,6 +1,5 @@
 from traveler.settings.base import *
 import dj_database_url
-import os
 
 # CUSTOM
 DATABASE_URL = os.environ.get("DATABASE_URL")
