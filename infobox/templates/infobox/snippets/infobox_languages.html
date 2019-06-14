@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Andere Sprachen</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li class="dropdown" style="visibility: hidden;">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+
+              </ul>
+            </li>
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+                <div class="text-center">
+                    {% if object.category_id %}
+                        <a href="{% url 'infobox:new' pk=object.pk %}" class="btn btn-info">Neue Variante</a>
+                    {% endif %}
+                    <br/><br/>
+                </div>
+                {% if object_list or parent %}
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titel</th>
+                                <th>Sprache</th>
+                                <th class="col-md-2 text-right"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if parent %}
+                                <tr>
+                                    <td>{{ parent.title }}</td>
+                                    <td>{{ parent.language }}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="btn-group" style="padding:0;">
+                                                <a class="btn" href="{% url 'infobox:edit' pk=parent.pk category_id=parent.category_id %}" type="button" style="display:inline-block; border:none; text-decoration: none;padding: 0;margin: 0;background:transparent;">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% for instance in object_list %}
+                                <tr>
+                                    <td>
+                                        <p>{{ instance.title }}</p>
+                                    </td>
+                                    <td>{{ instance.language }}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="btn-group" style="padding:0;">
+                                                <a class="btn" href="{% url 'infobox:edit' pk=instance.pk parent_id=object.pk %}" type="button" style="display:inline-block; border:none; text-decoration: none;padding: 0;margin: 0;background:transparent;">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="text-center">
+                        <p class="help-block" style="font-size:18px;">Kein Eintrag vorhanden</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

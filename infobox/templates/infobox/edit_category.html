@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+
+{% block navigation %}
+    <li>
+        <span><a href="{% url 'infobox:category' %}">Kategorien</a></span>
+    </li>
+    {% if object %}
+        <li>
+            <span><a href="{% url 'infobox:new_category' pk=object.pk %}">{{ object.title }}</a></span>
+        </li>
+    {% endif %}
+    <li>
+        <span><a>Kategorie bearbeiten</a></span>
+    </li>
+{% endblock %}
+
+{% block content %}
+  {% include "infobox/snippets/edit_category.html" %}
+{% endblock %}

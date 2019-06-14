@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+
+{% block navigation %}
+    <li>
+        <span><a href="{% url 'infobox:category' %}">Kategorien</a></span>
+    </li>
+    {% if object.parent %}
+        <li>
+            <span><a href="{% url 'infobox:new_category' pk=object.parent.pk %}">{{ object.parent.title }}</a></span>
+        </li>
+    {% endif %}
+    {% if object %}
+        <li>
+            <span><a href="{% url 'infobox:new_category' pk=object.pk %}">{{ object.title }}</a></span>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% include "infobox/snippets/new_category.html" %}
+  <form id="action_form" method="POST">{% csrf_token %}
+      {% include "infobox/snippets/category_delete_panel.html" %}
+      {% include "infobox/snippets/category_list.html" %}
+  </form>
+{% endblock %}

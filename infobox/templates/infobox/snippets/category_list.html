@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Kategorien <small>Navigation</small></h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li class="dropdown" style="visibility: hidden;">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+
+              </ul>
+            </li>
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Titel</th>
+                            <th class="col-md-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a style="text-decoration: underline;" href="{% url "infobox:category" %}">...</a>
+                            </td>
+                            <td></td>
+                        </tr>
+                        {% if object.parent %}
+                            <tr>
+                                <td>
+                                    <p><a href="{% url 'infobox:new_category' pk=object.parent.pk %}" style="text-decoration: underline;">{{ object.parent.title }}</a></p>
+                                </td>
+                                <td></td>
+                            </tr>
+                        {% endif %}
+                        {% if object %}
+                            <tr class="active">
+                                <td>
+                                    <p>
+                                        <a href="{% url 'infobox:new_category' pk=object.pk %}" style="text-decoration: underline;">{{ object.title }}</a>
+                                        <a href="{% url 'infobox:edit_category' pk=object.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+
+                                    </p>
+                                    {% for infobox in  object.infoboxes.all %}
+                                        <p>&nbsp;&nbsp;&nbsp;<a>{{ infobox.title }}</a>
+                                            <a href="{% url 'infobox:edit' pk=infobox.pk category_id=object.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                            {{ infobox.language }}
+                                            {% for variant in infobox.infobox_set.all %}
+                                                {{ variant.language }}
+                                            {% endfor %}
+                                        </p>
+
+                                    {% endfor %}
+                                </td>
+                                <td class="text-right">
+                                    <div class="form-group">
+                                        <div class="btn-group" style="padding:0;">
+                                            <a class="btn" href="{% url 'infobox:new' category_id=object.pk %}" type="button" style="display:inline-block; border:none; text-decoration: none;padding: 0;margin: 0;background:transparent;">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-group" style="padding:0;">
+                                            <input class="checkbox_category" type="checkbox" value="{{ object.pk }}" name="item" style="display:inline-block; border:none; text-decoration: none;padding: 0;margin: 0;background:transparent;">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    <p><a href="{% url 'infobox:new_category' pk=object.pk %}" style="text-decoration: underline;">{{ object.title }}</a></p>
+                                </td>
+                                <td class="text-right">
+                                    <div class="btn-group" style="padding:0;">
+                                        <input class="checkbox_category" type="checkbox" value="{{ object.pk }}" name="item" style="display:inline-block; border:none; text-decoration: none;padding: 0;margin: 0;background:transparent;">
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

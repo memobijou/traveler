@@ -17,12 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name="home/home.html")),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', TemplateView.as_view(template_name="registration/profile.html"), name="profile"),
     path(r'api/v1/api-auth/', include('rest_framework.urls')),
     path(r'api/v1/', include('infobox.api_urls')),
+    path(r'', include(('infobox.urls', "infobox",), "infobox")),
 ]
 
 

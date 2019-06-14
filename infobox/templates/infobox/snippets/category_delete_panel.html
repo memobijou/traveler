@@ -1,0 +1,97 @@
+<div class="row text-right">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="text-right">
+                        <div class="input-group">
+                            <select class="form-control" id="action_field">
+                              <option value="">---------</option>
+                              <option value="delete">Löschen</option>
+                            </select>
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary" id="delete_btn" type="submit" disabled>
+                              Aktion ausführen
+                          </button>
+                        </div>
+                      </div>
+                </div>
+                <p id="action_error" style="color:red;"></p>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    var action_form = document.getElementById("action_form");
+    var action_field = document.getElementById("action_field");
+    var delete_btn = document.getElementById("delete_btn");
+    var action_error_tag = document.getElementById("action_error");
+
+    var change_button_color_when_sub_categories_or_not = function(option_value){
+      {% if object.parent_id is None %}
+        if(option_value === "delete"){
+            //delete_btn.className = delete_btn.className.replace("btn-primary", "btn-danger");
+        }else{
+            //delete_btn.className = delete_btn.className.replace("btn-danger", "btn-primary");
+        }
+      {% endif %}
+    };
+
+    var change_action_url_of_form = function(action_field){
+      if(action_field.value === "delete"){
+          action_form.setAttribute("action", "{% url 'infobox:delete_category' %}");
+      }else{
+          action_form.removeAttribute("action");
+      }
+    };
+
+    change_button_color_when_sub_categories_or_not(action_field.value);
+
+    change_action_url_of_form(action_field);
+
+    action_field.onchange = function(e){
+      if(this.value === ""){
+        delete_btn.setAttribute("disabled", "");
+      }else {
+        delete_btn.removeAttribute("disabled");
+      }
+
+      change_action_url_of_form(action_field);
+
+      change_button_color_when_sub_categories_or_not(this.value);
+
+    };
+
+    action_form.onsubmit = function(e){
+        e.preventDefault();
+        var categories_to_delete_html_elements = document.getElementsByClassName("checkbox_category");
+        var categories_to_delete = [];
+
+        var q = "";
+        for(var i=0;i<categories_to_delete_html_elements.length; i++){
+            var category_el = categories_to_delete_html_elements[i];
+            if(category_el.checked){
+                categories_to_delete.push(category_el.value);
+                q = q + "item=" + category_el.value + "&";
+            }
+        }
+        q += "csrfmiddlewaretoken" +  "={{ csrf_token }}";
+
+        var action_url = " {% if object.parent_id %}{% url 'infobox:delete_category' parent_id=object.parent_id %}{% else %}{% url 'infobox:delete_category' %}{% endif %}";
+
+        $.post(action_url,
+            q, function(data, status, xhr){
+                var response = JSON.parse(xhr.responseText);
+                window.location.replace(response.redirect_url);
+            }
+        ).fail(function(xhr, status, error) {
+            // error handling
+            var response = JSON.parse(xhr.responseText);
+            action_error_tag.innerHTML = response.error;
+        });
+    };
+
+</script>
