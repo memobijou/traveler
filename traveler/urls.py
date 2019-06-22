@@ -26,7 +26,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/profile/', TemplateView.as_view(template_name="registration/profile.html"), name="profile"),
     path(r'api/v1/api-auth/', include('rest_framework.urls')),
-    path(r'api/v1/', include('infobox.api_urls')),
+    path(r'api/v1/', include(('infobox.api_urls', "infobox"), namespace="infobox_api")),
     path(r'', include(('infobox.urls', "infobox",), "infobox")),
 ]
 

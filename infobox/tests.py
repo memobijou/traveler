@@ -162,3 +162,18 @@ class InfoboxTestCase(TestCase):
     def create_sample_category(self):
         category = Category.objects.create(title="Category")
         return category
+
+    def test_get_categories_from_rest_api(self):
+        self.create_sample_category()
+        self.create_sample_category()
+        response = self.client.get(reverse_lazy("infobox_api:category-list"))
+        json_response = dict(json.loads(response.content))
+        print(json_response)
+        self.assertEqual(json_response.get("count"), 2)
+
+    def test_get_category_from_rest_api(self):
+        category_instance = self.create_sample_category()
+        response = self.client.get(reverse_lazy("infobox_api:category-detail", kwargs={"pk": category_instance.pk}))
+        json_response = dict(json.loads(response.content))
+        print(json_response)
+        self.assertEqual(json_response.get("id"), category_instance.pk)
