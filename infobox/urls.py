@@ -1,6 +1,9 @@
 from django.urls import path
 from infobox.views import CategoryView, InfoboxView, InfoboxUpdateView, CategoryUpdateView, InfoboxDeleteView,\
     CategoryDeleteView
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('categories/', CategoryView.as_view(), name='category'),
@@ -16,3 +19,5 @@ urlpatterns = [
     path("categories/delete/<int:parent_id>", CategoryDeleteView.as_view(), name="delete_category"),
     path("categories/delete", CategoryDeleteView.as_view(), name="delete_category")
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

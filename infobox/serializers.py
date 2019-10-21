@@ -5,7 +5,7 @@ from infobox.models import Category, Infobox
 class ChildInfoboxSerializer(serializers.ModelSerializer):
     class Meta:
         model = Infobox
-        fields = ('id', 'title', "parent", "description", 'category', "language", )
+        fields = ('id', 'title', "parent", "description", 'category', "language", "audio", )
 
 
 class InfoboxSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class InfoboxSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Infobox
-        fields = ('id', 'title', "description", "parent", 'category', "language", "infobox_set",)
+        fields = ('id', 'title', "description", "parent", 'category', "language", "audio", "infobox_set",)
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
