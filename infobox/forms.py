@@ -16,12 +16,13 @@ class CategoryCreationForm(forms.ModelForm):
 class InfoboxCreationForm(forms.ModelForm):
     class Meta:
         model = Infobox
-        fields = ("language", "title", "description",)
+        fields = ("language", "title", "description", "audio",)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs["class"] = "form-control"
+            if type(visible.field) != forms.FileField:
+                visible.field.widget.attrs["class"] = "form-control"
 
     def clean_language(self):
         language = self.cleaned_data['language']

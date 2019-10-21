@@ -21,3 +21,4 @@ class Infobox(models.Model):
     category = models.ForeignKey("infobox.Category", verbose_name=_("Kategorie"), on_delete=models.SET_NULL, null=True,
                                  related_name="infoboxes")
     parent = models.ForeignKey("infobox.Infobox", on_delete=models.CASCADE, null=True)
+    audio = models.FileField(null=True, blank=True, verbose_name="Audiodatei")
