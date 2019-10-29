@@ -16,7 +16,7 @@ class CategoryCreationForm(forms.ModelForm):
 class InfoboxCreationForm(forms.ModelForm):
     class Meta:
         model = Infobox
-        fields = ("language", "title", "description", "audio",)
+        fields = ("language", "title", "description", "type", "audio",)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
