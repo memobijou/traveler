@@ -32,6 +32,7 @@
                             <tr>
                                 <th>Titel</th>
                                 <th>Sprache</th>
+                                <th>Art</th>
                                 <th class="col-md-2 text-right"></th>
                             </tr>
                         </thead>
@@ -43,6 +44,9 @@
                                             <p>{{ supplication_data.title }}</p>
                                         </td>
                                         <td>{{ supplication_data.language }}</td>
+                                        <td>
+                                            {{ instance.type }}
+                                        </td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="btn-group" style="padding:0;">
