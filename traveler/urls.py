@@ -28,6 +28,7 @@ urlpatterns = [
     path(r'api/v1/api-auth/', include('rest_framework.urls')),
     path(r'api/v1/', include(('infobox.api_urls', "infobox"), namespace="infobox_api")),
     path(r'', include(('infobox.urls', "infobox",), "infobox")),
+    path(r'', include(('supplication.urls', "supplication",), "supplication")),
 ]
 
 

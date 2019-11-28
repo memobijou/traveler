@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+
+{% block navigation %}
+    <li>
+        <span><a href="{% url 'infobox:category' %}">Kategorien</a></span>
+    </li>
+    {% if category_id %}
+        <li>
+            <span><a href="{% url 'infobox:new_category' pk=category.id %}">{{ category.title }}</a></span>
+        </li>
+    {% endif %}
+    <li>
+        <span><a href="{% url 'infobox:edit' pk=infobox.id category_id=category.id %}"><b>Infobox - </b> {{ infobox.title }}</a></span>
+    </li>
+    <li>
+        <span><a href="{% url 'supplication:edit' pk=infobox.id supplication_id=parent_supplication_data.supplication.id %}"><b>Bittgebet </b> - {{ parent_supplication_data.title }}</a></span>
+    </li>
+    <li>
+        <span><a>Neue Variante</a></span>
+    </li>
+{% endblock %}
+
+{% block content %}
+
+    {% include 'supplication/parent_supplication.html' %}
+
+
+    {% include 'supplication/variant_form.html' with title="<b>Neue Variante</b> für Bittgebet erstellen" button_text="Neue Variante erstellen" %}
+{% endblock %}

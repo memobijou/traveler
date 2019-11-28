@@ -14,6 +14,7 @@ class Category(models.Model):
 language_choices = (("Arabisch", "Arabisch"), ("Deutsch", "Deutsch"), ("Türkisch", "Türkisch"), ("Urdu", "Urdu"),)
 type_choices = (("Mustahabb", "Mustahabb"), ("Sunnah", "Sunnah"))
 
+
 class Infobox(models.Model):
     title = models.CharField(max_length=200, verbose_name=_("Bezeichnung"))
     language = models.CharField(max_length=200, verbose_name=_("Typ"), null=True, blank=False, choices=language_choices)
@@ -21,5 +22,5 @@ class Infobox(models.Model):
     category = models.ForeignKey("infobox.Category", verbose_name=_("Kategorie"), on_delete=models.SET_NULL, null=True,
                                  related_name="infoboxes")
     parent = models.ForeignKey("infobox.Infobox", on_delete=models.CASCADE, null=True)
-    audio = models.FileField(null=True, blank=True, verbose_name="Audiodatei")
-    type = models.CharField(max_length=200, null=True, blank=True, choices=type_choices)
+    # audio = models.FileField(null=True, blank=True, verbose_name="Audiodatei")
+    # type = models.CharField(max_length=200, null=True, blank=True, choices=type_choices)

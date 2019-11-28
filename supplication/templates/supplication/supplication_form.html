@@ -1,0 +1,17 @@
+{% extends 'supplication/form.html' %}
+
+
+{% block supplication_form %}
+      <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ supplication_form.type.id_for_label }}">Art <span class="required">*</span>
+          </label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            {{ supplication_form.type }}
+            <div style="color:red;">
+                {% for error in supplication_form.type.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+          </div>
+      </div>
+{% endblock %}

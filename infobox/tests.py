@@ -39,17 +39,15 @@ class InfoboxTestCase(TestCase):
 
     def test_infobox_creation(self):
         category = Category.objects.create(title="Category")
-        title, description, type = "Infobox", "description", "Mustahabb"
+        title, description = "Infobox", "description"
         response = self.client.post(reverse_lazy("infobox:new", kwargs={"category_id": category.id}),
-                                    data={"title": title, "language": "Deutsch", "description": "description",
-                                          "type": type})
+                                    data={"title": title, "language": "Deutsch", "description": "description",})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Infobox.objects.count(), 1)
         infobox_instance = Infobox.objects.first()
         self.assertEqual(infobox_instance.category, category)
         self.assertEqual(infobox_instance.title, title)
         self.assertEqual(infobox_instance.description, description)
-        self.assertEqual(infobox_instance.type, type)
         self.assertEqual(Infobox.objects.count(), 1)
 
     def test_sub_infobox_creation(self):
