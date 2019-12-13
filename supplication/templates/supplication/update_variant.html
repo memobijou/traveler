@@ -26,4 +26,7 @@
     {% include 'supplication/variant_form.html' with title="<b>Bittgebet Variante</b> bearbeiten" button_text="Änderungen speichern" %}
     {% include 'supplication/variants.html' with supplication=supplication.parent %}
 
+    {% url 'supplication:delete_variant' pk=infobox.pk supplication_id=supplication.parent.id supplication_variant_id=supplication.id as delete_url %}
+    {% include 'supplication/delete_panel.html' with delete_url=delete_url%}
+
 {% endblock %}

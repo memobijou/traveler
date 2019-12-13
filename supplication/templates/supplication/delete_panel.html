@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+            <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+                <div class="text-right">
+                     <form id="action_form" method="POST">{% csrf_token %}
+                        <div class="input-group">
+                            <select class="form-control" id="action_field">
+                              <option value="">---------</option>
+                              <option value="delete">Löschen</option>
+                            </select>
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary" id="delete_btn" type="submit" disabled>
+                              Aktion ausführen
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<script>
+    var action_form = document.getElementById("action_form");
+    var action_field = document.getElementById("action_field");
+    var delete_btn = document.getElementById("delete_btn");
+
+
+    var change_button_color_when_variant_or_not = function(option_value){
+      {% if object.parent_id is None %}
+        if(option_value === "delete"){
+            delete_btn.className = delete_btn.className.replace("btn-primary", "btn-danger");
+        }else{
+            delete_btn.className = delete_btn.className.replace("btn-danger", "btn-primary");
+        }
+      {% endif %}
+    };
+
+    var change_action_url_of_form = function(action_field){
+      if(action_field.value === "delete"){
+          action_form.setAttribute("action", "{{ delete_url }}");
+      }else{
+          action_form.removeAttribute("action");
+      }
+    };
+
+    change_button_color_when_variant_or_not(action_field.value);
+    change_action_url_of_form(action_field);
+
+
+    action_field.onchange = function(e){
+      if(this.value === ""){
+        delete_btn.setAttribute("disabled", "");
+      }else {
+        delete_btn.removeAttribute("disabled");
+      }
+
+      change_action_url_of_form(action_field);
+
+      change_button_color_when_variant_or_not(this.value);
+
+    };
+</script>

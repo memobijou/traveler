@@ -22,5 +22,6 @@
     {# include 'supplication/parent_infobox.html' #}
     {% include 'supplication/supplication_form.html' with title="Bittgebet bearbeiten" button_text="Änderungen speichern" %}
     {% include 'supplication/variants.html' with parent_supplication_data=supplication_data %}
-
+    {% url 'supplication:delete' pk=infobox.pk supplication_id=supplication.id as delete_url %}
+    {% include 'supplication/delete_panel.html' with delete_url=delete_url%}
 {% endblock %}

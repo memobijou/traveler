@@ -6,7 +6,6 @@ from django.views.generic import View
 from infobox.models import Infobox
 from supplication.forms import SupplicationDataForm, SupplicationForm, SupplicationVariantForm
 from django.db import transaction
-
 from supplication.models import Supplication, SupplicationVariant
 
 
@@ -210,3 +209,21 @@ class UpdateSupplicationVariantView(View):
                                                          "supplication_variant_id": supplication_variant.id}))
         else:
             return render(request, template_name=self.template_name, context=context)
+
+
+class SupplicationDeleteView(View):
+    def post(self, request, *args, **kwargs):
+        supplication = get_object_or_404(Supplication, pk=self.kwargs.get("supplication_id"))
+        infobox = supplication.infobox
+        supplication.delete()
+        return HttpResponseRedirect(reverse_lazy("infobox:edit",
+                                                 kwargs={"pk": infobox.pk, "category_id": infobox.category_id}))
+
+
+class SupplicationVariantDeleteView(View):
+    def post(self, request, *args, **kwargs):
+        supplication_variant = get_object_or_404(SupplicationVariant, pk=self.kwargs.get("supplication_variant_id"))
+        supplication_variant.delete()
+        return HttpResponseRedirect(reverse_lazy("supplication:edit",
+                                                 kwargs={"pk": self.kwargs.get("pk"),
+                                                         "supplication_id": self.kwargs.get("supplication_id")}))
